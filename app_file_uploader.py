@@ -9,6 +9,7 @@
 """
 import streamlit as st
 from knowledge_base import KnowledgeBaseService
+import time
 
 # 添加网页标题
 st.title("知识库更新服务")
@@ -37,5 +38,8 @@ if uploader_file is not None:
     # 获取文件内容
     file_content = uploader_file.getvalue().decode("utf-8")  # 将字节流转换为字符串
 
-    result = st.session_state["service"].upload_by_str(file_content, file_name)
-    st.write(result)
+    with st.spinner("正在上传文件到知识库..."):
+        #在spinner内的代码执行时，页面会显示一个加载动画，提示用户正在进行某项操作
+        time.sleep(2)  # 模拟上传过程中的等待时间，这里设置为2秒
+        result = st.session_state["service"].upload_by_str(file_content, file_name)
+        st.write(result)
